@@ -411,30 +411,86 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
   const isUp = token.change24h >= 0;
   const chatEndRef = useRef(null);
   const [copied, setCopied] = useState(false);
-  const [messages, setMessages] = useState([
-    { id: 1, sender: token.team?.[0] || { name: "Team", avatar: "🦞" }, text: `Welcome to ${token.name}! Ask us anything about the project.`, time: "14:32", isBot: true },
-  ]);
+  const [messages, setMessages] = useState([]);
+  const [updates, setUpdates] = useState([]);
+  const [name, setName] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("clav_chat_name") || "";
+  });
   const [input, setInput] = useState("");
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
-  const sendMessage = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("clav_chat_name", name || "");
+    }
+  }, [name]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [u, c] = await Promise.all([
+          fetch(`${API_BASE}/api/tokens/${token.id}/updates`),
+          fetch(`${API_BASE}/api/tokens/${token.id}/chat`),
+        ]);
+        const updatesJson = await u.json();
+        const chatJson = await c.json();
+        setUpdates(
+          Array.isArray(updatesJson.updates)
+            ? updatesJson.updates.map((up) => ({
+                ...up,
+                timestamp: formatRelative(up.created_at),
+              }))
+            : []
+        );
+        const teamNames = new Set((token.team || []).map((m) => m.name));
+        setMessages(
+          Array.isArray(chatJson.messages)
+            ? chatJson.messages.map((m) => ({
+                id: m.id,
+                sender: { name: m.author || "Guest", avatar: avatarFromName(m.author || "Guest") },
+                text: m.message,
+                time: formatRelative(m.created_at),
+                isBot: teamNames.has(m.author),
+              }))
+            : []
+        );
+      } catch (err) {
+        // keep UI usable
+      }
+    };
+    load();
+  }, [token.id]);
+
+  const sendMessage = async () => {
     if (!input.trim()) return;
-    const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    setMessages(prev => [...prev, { id: prev.length + 1, sender: { name: "You", avatar: "👤" }, text: input, time: now, isBot: false }]);
-    setInput("");
-    
-    setTimeout(() => {
-      const bot = token.team[Math.floor(Math.random() * token.team.length)];
-      const replies = ["Great question! We're working on that.", "Thanks for your interest!", "Check our latest update above!"];
-      setMessages(prev => [...prev, { 
-        id: prev.length + 1, 
-        sender: bot, 
-        text: replies[Math.floor(Math.random() * replies.length)], 
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), 
-        isBot: true 
-      }]);
-    }, 1200);
+    if (!name.trim()) return;
+    try {
+      const resp = await fetch(`${API_BASE}/api/tokens/${token.id}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), message: input.trim() }),
+      });
+      const data = await resp.json();
+      if (resp.ok && data?.message) {
+        const author = data.message.author || name.trim();
+        const isBot = (token.team || []).some((m) => m.name === author);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: data.message.id,
+            sender: { name: author, avatar: avatarFromName(author) },
+            text: data.message.message,
+            time: formatRelative(data.message.created_at),
+            isBot,
+          },
+        ]);
+      }
+      setInput("");
+    } catch (err) {
+      // ignore send errors
+    }
   };
 
   const mintAddress = token.mint_address || token.mintAddress;
@@ -554,13 +610,13 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Updates</div>
               </div>
               <div style={{ padding: 16, overflowY: "auto", maxHeight: 280 }}>
-                {(token.updates || []).length === 0 && (
+                {updates.length === 0 && (
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>No updates yet.</div>
                 )}
-                {(token.updates || []).map(update => (
+                {updates.map(update => (
                   <div key={update.id} style={{ marginBottom: 16, paddingBottom: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                      <div style={{ fontSize: 20 }}>{update.avatar}</div>
+                      <div style={{ fontSize: 20 }}>{avatarFromName(update.author)}</div>
                       <div style={{ fontSize: 13, fontWeight: 500 }}>{update.author}</div>
                       <div style={{ fontSize: 11, color: COLORS.textDim, marginLeft: "auto" }}>{update.timestamp}</div>
                     </div>
@@ -594,6 +650,23 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
               </div>
 
               <div style={{ padding: 12, borderTop: `1px solid ${COLORS.border}` }}>
+                <input
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Your name"
+                  style={{
+                    width: "100%",
+                    background: COLORS.bg,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 10,
+                    padding: "8px 12px",
+                    color: COLORS.text,
+                    fontSize: 13,
+                    outline: "none",
+                    fontFamily: "inherit",
+                    marginBottom: 8,
+                  }}
+                />
                 <div style={{ display: "flex", gap: 8 }}>
                   <input 
                     value={input} 
