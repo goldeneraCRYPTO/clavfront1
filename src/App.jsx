@@ -206,10 +206,10 @@ const mapTokenRow = (row) => {
 const fetchDexscreener = async (mintAddress) => {
   if (!mintAddress) return null;
   try {
-    const resp = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${mintAddress}`);
+    const resp = await fetch(`${API_BASE}/api/metrics/${mintAddress}`);
     const data = await resp.json();
-    if (!data?.pairs?.length) return null;
-    return data.pairs[0];
+    if (!data?.success || !data?.data) return null;
+    return data.data;
   } catch (err) {
     return null;
   }
@@ -660,10 +660,10 @@ export default function ClawValley() {
       tokenList.map(async (token) => {
         const pair = await fetchDexscreener(token.mintAddress);
         if (!pair) return token;
-        const price = pair.priceUsd ? Number(pair.priceUsd) : null;
-        const change24h = pair.priceChange?.h24 ?? null;
-        const mcap = pair.fdv || pair.marketCap || null;
-        const volume = pair.volume?.h24 || null;
+        const price = pair.price ?? null;
+        const change24h = pair.change24h ?? null;
+        const mcap = pair.mcap ?? null;
+        const volume = pair.volume ?? null;
         const dexscreener = pair.url || token.dexscreener;
         return { ...token, price, change24h, mcap, volume, dexscreener };
       })
