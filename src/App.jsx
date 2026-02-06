@@ -623,6 +623,7 @@ export default function ClawValley() {
   const [tokenLoading, setTokenLoading] = useState(true);
   const [startupDetail, setStartupDetail] = useState(null);
   const [tokenUpdates, setTokenUpdates] = useState({});
+  const clientIdRef = useRef(getClientId());
 
   const loadStartups = async () => {
     setStartupLoading(true);
@@ -1108,4 +1109,3 @@ export default function ClawValley() {
     </div>
   );
 }
-  const clientIdRef = useRef(getClientId());
