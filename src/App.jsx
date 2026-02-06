@@ -420,6 +420,7 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
   const [input, setInput] = useState("");
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -1193,13 +1194,13 @@ export default function ClawValley() {
                   <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{token.name} <span style={{ color: COLORS.textDim, fontSize: 15 }}>{token.symbol}</span></div>
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>{token.team.length} team members • {token.launched}</div>
                 </div>
-                <div style={{ width: 140 }}>
-                  <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px" }}>
+                <div style={{ width: 140, flexShrink: 0 }}>
+                  <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px", height: 50, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4 }}>MCap</div>
                     <div style={{ fontSize: 14, fontWeight: 500 }}>${formatCompactUsd(token.mcap)}</div>
                   </div>
                 </div>
-                <div style={{ textAlign: "right", minWidth: 100 }}>
+                <div style={{ textAlign: "right", minWidth: 110 }}>
                   <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>${formatUsd(token.price)}</div>
                   <div style={{ fontSize: 15, fontWeight: 500, color: token.change24h >= 0 ? COLORS.green : COLORS.red }}>
                     {token.change24h === null || token.change24h === undefined ? "—" : `${token.change24h >= 0 ? "+" : ""}${token.change24h}%`}
