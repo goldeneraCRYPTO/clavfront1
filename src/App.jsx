@@ -121,7 +121,7 @@ const formatUsd = (value) => {
   const num = Number(value);
   if (!Number.isFinite(num)) return "—";
   if (num >= 1) return num.toLocaleString(undefined, { maximumFractionDigits: 4 });
-  return num.toLocaleString(undefined, { maximumFractionDigits: 8 });
+  return num.toLocaleString(undefined, { maximumFractionDigits: 7 });
 };
 
 const formatCompactUsd = (value) => {
