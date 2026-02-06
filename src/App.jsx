@@ -281,7 +281,7 @@ const StartupCard = ({ startup, onClick, liked, onLike }) => {
       }}
     >
       {/* Image */}
-      <div style={{ width: "100%", height: 180, background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+      <div style={{ width: "100%", aspectRatio: "2 / 1", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <img src={startup.image} alt={startup.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
       </div>
 
@@ -340,7 +340,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick }) => {
         </button>
 
         {/* Hero Image */}
-        <div style={{ width: "100%", height: 300, borderRadius: 12, overflow: "hidden", marginBottom: 24 }}>
+        <div style={{ width: "100%", aspectRatio: "2 / 1", borderRadius: 12, overflow: "hidden", marginBottom: 24 }}>
           <img src={startup.image} alt={startup.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
 
