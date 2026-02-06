@@ -1194,16 +1194,18 @@ export default function ClawValley() {
                   <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{token.name} <span style={{ color: COLORS.textDim, fontSize: 15 }}>{token.symbol}</span></div>
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>{token.team.length} team members • {token.launched}</div>
                 </div>
-                <div style={{ width: 140, flexShrink: 0 }}>
-                  <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px", height: 50, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                    <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4 }}>MCap</div>
-                    <div style={{ fontSize: 14, fontWeight: 500 }}>${formatCompactUsd(token.mcap)}</div>
+                <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16, flexShrink: 0, width: 280, justifyContent: "flex-end" }}>
+                  <div style={{ width: 140, flexShrink: 0 }}>
+                    <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px", height: 50, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                      <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, whiteSpace: "nowrap" }}>MCap</div>
+                      <div style={{ fontSize: 14, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
+                    </div>
                   </div>
-                </div>
-                <div style={{ textAlign: "right", minWidth: 110 }}>
-                  <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>${formatUsd(token.price)}</div>
-                  <div style={{ fontSize: 15, fontWeight: 500, color: token.change24h >= 0 ? COLORS.green : COLORS.red }}>
-                    {token.change24h === null || token.change24h === undefined ? "—" : `${token.change24h >= 0 ? "+" : ""}${token.change24h}%`}
+                  <div style={{ textAlign: "right", width: 120, fontVariantNumeric: "tabular-nums" }}>
+                    <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>${formatUsd(token.price)}</div>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: token.change24h >= 0 ? COLORS.green : COLORS.red }}>
+                      {token.change24h === null || token.change24h === undefined ? "—" : `${token.change24h >= 0 ? "+" : ""}${token.change24h}%`}
+                    </div>
                   </div>
                 </div>
               </div>
