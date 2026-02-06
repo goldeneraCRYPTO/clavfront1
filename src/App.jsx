@@ -410,6 +410,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick }) => {
 const TokenPage = ({ token, onBack, onLogoClick }) => {
   const isUp = token.change24h >= 0;
   const chatEndRef = useRef(null);
+  const [copied, setCopied] = useState(false);
   const [messages, setMessages] = useState([
     { id: 1, sender: token.team?.[0] || { name: "Team", avatar: "🦞" }, text: `Welcome to ${token.name}! Ask us anything about the project.`, time: "14:32", isBot: true },
   ]);
@@ -436,6 +437,18 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
     }, 1200);
   };
 
+  const mintAddress = token.mint_address || token.mintAddress;
+  const copyMint = async () => {
+    if (!mintAddress) return;
+    try {
+      await navigator.clipboard.writeText(mintAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      // ignore clipboard failures
+    }
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: COLORS.bg, color: COLORS.text }}>
       <Header onLogoClick={onLogoClick} />
@@ -452,7 +465,26 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
               <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
                 <img src={token.logo} alt={token.name} style={{ width: 48, height: 48, borderRadius: 8 }} />
                 <div>
-                  <div style={{ fontSize: 24, fontWeight: 500 }}>{token.name} <span style={{ color: COLORS.textDim, fontSize: 18 }}>{token.symbol}</span></div>
+                  <div style={{ fontSize: 24, fontWeight: 500, display: "flex", alignItems: "center", gap: 10 }}>
+                    <span>{token.name} <span style={{ color: COLORS.textDim, fontSize: 18 }}>{token.symbol}</span></span>
+                    {mintAddress && (
+                      <button
+                        onClick={copyMint}
+                        title={copied ? "Copied!" : "Copy mint address"}
+                        style={{
+                          background: COLORS.bg,
+                          border: `1px solid ${COLORS.border}`,
+                          borderRadius: 8,
+                          padding: "4px 8px",
+                          fontSize: 12,
+                          color: copied ? COLORS.green : COLORS.textMuted,
+                          cursor: "pointer",
+                        }}
+                      >
+                        {copied ? "✓ Copied" : "📋 Copy"}
+                      </button>
+                    )}
+                  </div>
                   <div style={{ fontSize: 14, color: COLORS.textDim }}>Launched {token.launched || "recently"}</div>
                 </div>
                 <div style={{ marginLeft: "auto", textAlign: "right" }}>
