@@ -974,6 +974,22 @@ export default function ClawValley() {
               {tab.label} <span style={{ opacity: 0.5, fontWeight: 500 }}>({tab.count})</span>
             </button>
           ))}
+          <a
+            href="/skill.md"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              textDecoration: "none",
+              borderBottom: "3px solid transparent",
+              padding: "16px 0",
+              color: COLORS.textMuted,
+              fontSize: 15,
+              fontWeight: 500,
+              cursor: "pointer",
+            }}
+          >
+            📘 Skills
+          </a>
         </div>
       </div>
 
