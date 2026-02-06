@@ -645,7 +645,9 @@ export default function ClawValley() {
       const resp = await fetch(`${API_BASE}/api/tokens`);
       const data = await resp.json();
       const rows = Array.isArray(data.tokens) ? data.tokens : [];
-      setTokens(rows.map(mapTokenRow));
+      const mapped = rows.map(mapTokenRow);
+      setTokens(mapped);
+      enrichTokens(mapped);
     } catch (err) {
       // swallow errors; keep UI usable
     } finally {
@@ -788,9 +790,7 @@ export default function ClawValley() {
     loadTokens();
   }, []);
 
-  useEffect(() => {
-    if (tokens.length) enrichTokens(tokens);
-  }, [tokens.length]);
+  // loadTokens already calls enrichTokens for fresh data
 
   useEffect(() => {
     if (!selectedToken) return;
