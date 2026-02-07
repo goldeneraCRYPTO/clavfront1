@@ -729,7 +729,40 @@ export default function ClawValley() {
   const [tokenLoading, setTokenLoading] = useState(true);
   const [startupDetail, setStartupDetail] = useState(null);
   const [tokenUpdates, setTokenUpdates] = useState({});
+  const [routeStartupId, setRouteStartupId] = useState(null);
+  const [routeTokenId, setRouteTokenId] = useState(null);
   const clientIdRef = useRef(getClientId());
+
+  const applyHashRoute = () => {
+    const raw = (window.location.hash || "").replace(/^#\/?/, "");
+    const [segment, id] = raw.split("/");
+
+    if (segment === "startup" && id) {
+      setActiveTab("startups");
+      setRouteStartupId(id);
+      setRouteTokenId(null);
+      setSelectedToken(null);
+      return;
+    }
+
+    if (segment === "token" && id) {
+      setActiveTab("tokens");
+      setRouteTokenId(id);
+      setRouteStartupId(null);
+      setSelectedStartup(null);
+      return;
+    }
+
+    if (segment === "tokens") {
+      setActiveTab("tokens");
+    } else {
+      setActiveTab("startups");
+    }
+    setRouteStartupId(null);
+    setRouteTokenId(null);
+    setSelectedStartup(null);
+    setSelectedToken(null);
+  };
 
   const loadStartups = async () => {
     setStartupLoading(true);
@@ -896,6 +929,33 @@ export default function ClawValley() {
     loadTokens();
   }, []);
 
+  useEffect(() => {
+    applyHashRoute();
+    window.addEventListener("hashchange", applyHashRoute);
+    return () => window.removeEventListener("hashchange", applyHashRoute);
+  }, []);
+
+  useEffect(() => {
+    if (!routeStartupId) return;
+    const startup = startups.find((s) => String(s.id) === String(routeStartupId));
+    if (!startup) return;
+    setSelectedStartup(startup);
+    setSelectedToken(null);
+    loadStartupDetail(startup.id);
+  }, [routeStartupId, startups]);
+
+  useEffect(() => {
+    if (!routeTokenId) return;
+    const token = tokens.find((t) => String(t.id) === String(routeTokenId));
+    if (!token) return;
+    const updates = tokenUpdates[token.startupId] || [];
+    setSelectedToken({ ...token, updates });
+    setSelectedStartup(null);
+    if (!tokenUpdates[token.startupId]) {
+      loadStartupDetail(token.startupId);
+    }
+  }, [routeTokenId, tokens]);
+
   // loadTokens already calls enrichTokens for fresh data
 
   useEffect(() => {
@@ -913,14 +973,21 @@ export default function ClawValley() {
   }, [selectedStartup, selectedToken]);
 
   const handleLogoClick = () => {
-    setSelectedStartup(null);
-    setSelectedToken(null);
-    setActiveTab("startups");
+    window.location.hash = "startups";
     window.scrollTo(0, 0);
   };
 
   if (selectedToken) {
-    return <TokenPage token={selectedToken} onBack={() => setSelectedToken(null)} onLogoClick={handleLogoClick} />;
+    return (
+      <TokenPage
+        token={selectedToken}
+        onBack={() => {
+          if (window.history.length > 1) window.history.back();
+          else window.location.hash = "tokens";
+        }}
+        onLogoClick={handleLogoClick}
+      />
+    );
   }
 
   const selectedStartupResolved =
@@ -932,13 +999,15 @@ export default function ClawValley() {
     return (
       <StartupPage
         startup={selectedStartupResolved}
-        onBack={() => setSelectedStartup(null)}
+        onBack={() => {
+          if (window.history.length > 1) window.history.back();
+          else window.location.hash = "startups";
+        }}
         onLogoClick={handleLogoClick}
         onViewToken={() => {
           const token = tokens.find(t => t.startupId === selectedStartupResolved.id);
           if (token) {
-            const updates = tokenUpdates[selectedStartupResolved.id] || [];
-            setSelectedToken({ ...token, updates });
+            window.location.hash = `token/${token.id}`;
           }
         }}
       />
@@ -958,7 +1027,9 @@ export default function ClawValley() {
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                window.location.hash = tab.id;
+              }}
               style={{
                 background: "none",
                 border: "none",
@@ -1097,8 +1168,7 @@ export default function ClawValley() {
                   liked={likedIds.has(startup.id)}
                   onLike={handleLike}
                   onClick={() => {
-                    setSelectedStartup(startup);
-                    loadStartupDetail(startup.id);
+                    window.location.hash = `startup/${startup.id}`;
                   }}
                 />
               ))}
@@ -1186,10 +1256,7 @@ export default function ClawValley() {
               <div 
                 key={token.id}
                 onClick={() => {
-                  setSelectedToken(token);
-                  if (!tokenUpdates[token.startupId]) {
-                    loadStartupDetail(token.startupId);
-                  }
+                  window.location.hash = `token/${token.id}`;
                 }}
                 style={{
                   background: COLORS.bgCard,
