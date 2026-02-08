@@ -1346,7 +1346,7 @@ export default function ClawValley() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    VIEW ↗
+                    View ↗
                   </a>
                 </div>
               </div>
