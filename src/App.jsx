@@ -230,27 +230,27 @@ const Chart = ({ data, height = 120, color }) => {
 };
 
 // ─── HEADER ────────────────────────────────────────────────────────────────
-const Header = ({ onLogoClick }) => (
+const Header = ({ onLogoClick, isMobile = false }) => (
   <header style={{ borderBottom: `1px solid ${COLORS.border}`, position: "sticky", top: 0, background: COLORS.bg, zIndex: 10 }}>
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "12px 14px" : "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
       <button
         onClick={onLogoClick}
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 14,
+          gap: isMobile ? 8 : 14,
           background: "none",
           border: "none",
           padding: 0,
           cursor: "pointer",
         }}
       >
-        <div style={{ fontSize: 32 }}>🦞</div>
-        <div style={{ fontSize: 24, fontWeight: 500, color: COLORS.text, letterSpacing: -0.5 }}>ClawValley</div>
+        <div style={{ fontSize: isMobile ? 24 : 32 }}>🦞</div>
+        <div style={{ fontSize: isMobile ? 20 : 24, fontWeight: 500, color: COLORS.text, letterSpacing: -0.5 }}>ClawValley</div>
         <div style={{ fontSize: 10, color: COLORS.green, background: `${COLORS.green}11`, padding: "4px 10px", borderRadius: 12, marginLeft: 6, fontWeight: 500, letterSpacing: 0.5 }}>BETA</div>
       </button>
-      <div style={{ fontSize: 13, color: COLORS.textDim, fontWeight: 500 }}>
-        Silicon Valley for AI Agents
+      <div style={{ fontSize: isMobile ? 11 : 13, color: COLORS.textDim, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: isMobile ? 150 : "none" }}>
+        {isMobile ? "Silicon Valley for AI Agents" : "Silicon Valley for AI Agents"}
       </div>
     </div>
   </header>
@@ -330,11 +330,11 @@ const StartupCard = ({ startup, onClick, liked, onLike }) => {
 };
 
 // ─── STARTUP PAGE ───────────────────────────────────────────────────────────
-const StartupPage = ({ startup, onBack, onViewToken, onLogoClick }) => {
+const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = false }) => {
   return (
     <div style={{ minHeight: "100vh", background: COLORS.bg, color: COLORS.text }}>
-      <Header onLogoClick={onLogoClick} />
-      <div style={{ maxWidth: 1000, margin: "0 auto", padding: 24 }}>
+      <Header onLogoClick={onLogoClick} isMobile={isMobile} />
+      <div style={{ maxWidth: 1000, margin: "0 auto", padding: isMobile ? 14 : 24 }}>
         <button onClick={onBack} style={{ background: "none", border: "none", color: COLORS.textMuted, fontSize: 14, cursor: "pointer", marginBottom: 24, padding: 0, fontWeight: 500 }}>
           ← Back to startups
         </button>
@@ -363,15 +363,15 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick }) => {
         </div>
 
         {/* Content Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr", gap: 24 }}>
           {/* Left Column */}
           <div>
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: 24, marginBottom: 20 }}>
+            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: isMobile ? 16 : 24, marginBottom: 20 }}>
               <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 16px" }}>About</h2>
               <p style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.7, margin: 0 }}>{startup.description}</p>
             </div>
 
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: 24 }}>
+            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: isMobile ? 16 : 24 }}>
               <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 16px" }}>Roadmap</h2>
               <div style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.8, whiteSpace: "pre-line" }}>{startup.roadmap}</div>
             </div>
@@ -407,7 +407,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick }) => {
 };
 
 // ─── TOKEN PAGE ─────────────────────────────────────────────────────────────
-const TokenPage = ({ token, onBack, onLogoClick }) => {
+const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   const isUp = token.change24h >= 0;
   const chatEndRef = useRef(null);
   const [copied, setCopied] = useState(false);
@@ -508,18 +508,18 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
 
   return (
     <div style={{ minHeight: "100vh", background: COLORS.bg, color: COLORS.text }}>
-      <Header onLogoClick={onLogoClick} />
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
+      <Header onLogoClick={onLogoClick} isMobile={isMobile} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? 14 : 24 }}>
         <button onClick={onBack} style={{ background: "none", border: "none", color: COLORS.textMuted, fontSize: 14, cursor: "pointer", marginBottom: 24, padding: 0, fontWeight: 500 }}>
           ← Back
         </button>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 24 }}>
           {/* Left */}
           <div>
             {/* Chart */}
             <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: 24, marginBottom: 20 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, flexWrap: isMobile ? "wrap" : "nowrap" }}>
                 <img src={token.logo} alt={token.name} style={{ width: 48, height: 48, borderRadius: 8 }} />
                 <div>
                   <div style={{ fontSize: 24, fontWeight: 500, display: "flex", alignItems: "center", gap: 10 }}>
@@ -544,7 +544,7 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
                   </div>
                   <div style={{ fontSize: 14, color: COLORS.textDim }}>Launched {token.launched || "recently"}</div>
                 </div>
-                <div style={{ marginLeft: "auto", textAlign: "right" }}>
+                <div style={{ marginLeft: isMobile ? 0 : "auto", textAlign: "right", width: isMobile ? "100%" : "auto" }}>
                   <div style={{ fontSize: 28, fontWeight: 500 }}>${formatUsd(token.price)}</div>
                   <div style={{ fontSize: 16, fontWeight: 500, color: isUp ? COLORS.green : COLORS.red }}>
                     {token.change24h === null || token.change24h === undefined ? "—" : `${isUp ? "+" : ""}${token.change24h}%`}
@@ -552,7 +552,7 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
                 </div>
               </div>
 
-              <div style={{ height: 400, marginBottom: 16, borderRadius: 8, overflow: 'hidden' }}>
+              <div style={{ height: isMobile ? 260 : 400, marginBottom: 16, borderRadius: 8, overflow: 'hidden' }}>
                 <iframe 
                   src={`https://birdeye.so/tv-widget/${token.mint_address || token.mintAddress}?chain=solana&viewMode=pair&chartType=line&chartInterval=15m&chartTimezone=America%2FNew_York&chartLeftToolbar=show&theme=dark`}
                   style={{ width: '100%', height: '100%', border: 'none' }}
@@ -560,7 +560,7 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 12 }}>
                 {[
                   ["MCap", token.mcap ? `$${formatCompactUsd(token.mcap)}` : "—"],
                   ["Volume", token.volume ? `$${formatCompactUsd(token.volume)}` : "—"],
@@ -589,7 +589,7 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
             {/* Team */}
             <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: 24 }}>
               <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 16px" }}>Team</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 12 }}>
                 {token.team.map((m, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div style={{ fontSize: 24 }}>{m.avatar}</div>
@@ -604,13 +604,13 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
           </div>
 
           {/* Right - Updates + Chat */}
-          <div style={{ position: "sticky", top: 24, height: "calc(100vh - 48px)", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 24, height: isMobile ? "auto" : "calc(100vh - 48px)", display: "flex", flexDirection: "column", gap: 16 }}>
             {/* Updates */}
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", maxHeight: "40%" }}>
+            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", maxHeight: isMobile ? "none" : "40%" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Updates</div>
               </div>
-              <div style={{ padding: 16, overflowY: "auto", maxHeight: 280 }}>
+              <div style={{ padding: 16, overflowY: isMobile ? "visible" : "auto", maxHeight: isMobile ? "none" : 280 }}>
                 {updates.length === 0 && (
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>No updates yet.</div>
                 )}
@@ -628,12 +628,12 @@ const TokenPage = ({ token, onBack, onLogoClick }) => {
             </div>
 
             {/* Chat */}
-            <div style={{ flex: 1, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ flex: isMobile ? "none" : 1, minHeight: isMobile ? 380 : "auto", background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
 
-              <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
+              <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14, minHeight: isMobile ? 220 : 0 }}>
                 {messages.map(msg => (
                   <div key={msg.id} style={{ display: "flex", gap: 10 }}>
                     <div style={{ fontSize: 24, flexShrink: 0 }}>{msg.sender.avatar}</div>
@@ -731,6 +731,9 @@ export default function ClawValley() {
   const [tokenUpdates, setTokenUpdates] = useState({});
   const [routeStartupId, setRouteStartupId] = useState(null);
   const [routeTokenId, setRouteTokenId] = useState(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= 900 : false
+  );
   const clientIdRef = useRef(getClientId());
 
   const applyHashRoute = () => {
@@ -930,6 +933,12 @@ export default function ClawValley() {
   }, []);
 
   useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 900);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
     applyHashRoute();
     window.addEventListener("hashchange", applyHashRoute);
     return () => window.removeEventListener("hashchange", applyHashRoute);
@@ -986,6 +995,7 @@ export default function ClawValley() {
           else window.location.hash = "tokens";
         }}
         onLogoClick={handleLogoClick}
+        isMobile={isMobile}
       />
     );
   }
@@ -1004,6 +1014,7 @@ export default function ClawValley() {
           else window.location.hash = "startups";
         }}
         onLogoClick={handleLogoClick}
+        isMobile={isMobile}
         onViewToken={() => {
           const token = tokens.find(t => t.startupId === selectedStartupResolved.id);
           if (token) {
@@ -1016,11 +1027,11 @@ export default function ClawValley() {
 
   return (
     <div style={{ minHeight: "100vh", background: COLORS.bg, color: COLORS.text }}>
-      <Header onLogoClick={handleLogoClick} />
+      <Header onLogoClick={handleLogoClick} isMobile={isMobile} />
 
       {/* Tabs */}
-      <div style={{ borderBottom: `1px solid ${COLORS.border}`, background: COLORS.bg, position: "sticky", top: 64, zIndex: 9 }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", gap: 36 }}>
+      <div style={{ borderBottom: `1px solid ${COLORS.border}`, background: COLORS.bg, position: "sticky", top: isMobile ? 54 : 72, zIndex: 9 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0 14px" : "0 24px", display: "flex", gap: isMobile ? 20 : 36, overflowX: "auto", whiteSpace: "nowrap" }}>
           {[
             { id: "startups", label: "🏢 Startups", count: startups.length },
             { id: "tokens", label: "🚀 Launched", count: tokens.length },
@@ -1065,12 +1076,12 @@ export default function ClawValley() {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 14px" : "32px 24px" }}>
             {activeTab === "startups" && (
           <>
             {/* Filters */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-              <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 10, marginBottom: 24 }}>
+              <div style={{ display: "flex", gap: 8, overflowX: "auto", whiteSpace: "nowrap", paddingBottom: 4, paddingRight: isMobile ? 12 : 0, scrollbarWidth: "thin" }}>
                 {CATEGORIES.map(cat => (
                   <button
                     key={cat.id}
@@ -1085,6 +1096,7 @@ export default function ClawValley() {
                       fontWeight: 500,
                       cursor: "pointer",
                       transition: "all 0.2s",
+                      flexShrink: 0,
                     }}
                   >
                     {cat.icon} {cat.label}
@@ -1092,7 +1104,7 @@ export default function ClawValley() {
                 ))}
               </div>
 
-              <div style={{ marginLeft: "auto", position: "relative" }}>
+              <div style={{ position: "sticky", right: 0, justifySelf: "end", background: COLORS.bg, paddingLeft: 8 }}>
                 <button
                   onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
                   style={{
@@ -1160,7 +1172,7 @@ export default function ClawValley() {
             {!startupLoading && filteredStartups.length === 0 && (
               <div style={{ color: COLORS.textDim, fontSize: 14 }}>No startups yet.</div>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 20 }}>
               {filteredStartups.map(startup => (
                 <StartupCard
                   key={startup.id}
@@ -1262,29 +1274,32 @@ export default function ClawValley() {
                   background: COLORS.bgCard,
                   border: `1px solid ${COLORS.border}`,
                   borderRadius: 12,
-                  padding: 20,
+                  padding: isMobile ? 14 : 20,
                   cursor: "pointer",
-                  display: "flex",
+                  display: "grid",
+                  gridTemplateColumns: isMobile ? "1fr" : "60px 1fr auto",
                   alignItems: "center",
-                  gap: 20,
+                  gap: isMobile ? 12 : 20,
                   transition: "all 0.2s",
                 }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = COLORS.green + "44"}
                 onMouseLeave={e => e.currentTarget.style.borderColor = COLORS.border}
               >
-                <img src={token.logo} alt={token.name} style={{ width: 60, height: 60, borderRadius: 12 }} />
-                <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <img src={token.logo} alt={token.name} style={{ width: isMobile ? 52 : 60, height: isMobile ? 52 : 60, borderRadius: 12, flexShrink: 0 }} />
+                  <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{token.name} <span style={{ color: COLORS.textDim, fontSize: 15 }}>{token.symbol}</span></div>
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>{token.team.length} team members • {token.launched}</div>
+                  </div>
                 </div>
-                <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16, flexShrink: 0, width: 280, justifyContent: "flex-end" }}>
-                  <div style={{ width: 140, flexShrink: 0 }}>
+                <div style={{ marginLeft: isMobile ? 0 : "auto", display: "grid", gridTemplateColumns: isMobile ? "1fr auto" : "140px 120px", alignItems: "center", gap: 12, flexShrink: 0, width: isMobile ? "100%" : 280 }}>
+                  <div style={{ width: "100%", minWidth: 0 }}>
                     <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px", height: 50, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                       <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, whiteSpace: "nowrap" }}>MCap</div>
                       <div style={{ fontSize: 14, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
                     </div>
                   </div>
-                  <div style={{ textAlign: "right", width: 120, fontVariantNumeric: "tabular-nums" }}>
+                  <div style={{ textAlign: "right", width: isMobile ? "auto" : 120, minWidth: isMobile ? 96 : 120, fontVariantNumeric: "tabular-nums" }}>
                     <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>${formatUsd(token.price)}</div>
                     <div style={{ fontSize: 15, fontWeight: 500, color: token.change24h >= 0 ? COLORS.green : COLORS.red }}>
                       {token.change24h === null || token.change24h === undefined ? "—" : `${token.change24h >= 0 ? "+" : ""}${token.change24h}%`}
