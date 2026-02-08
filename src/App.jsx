@@ -597,7 +597,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                   ["Volume", token.volume ? `$${formatCompactUsd(token.volume)}` : "—"],
                   ["Holders", "—"],
                 ].map(([label, val]) => (
-                  <div key={label} style={{ background: COLORS.bg, borderRadius: 8, padding: 12 }}>
+                  <div key={label} style={{ background: COLORS.bg, borderRadius: 16, padding: 12 }}>
                     <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4 }}>{label}</div>
                     <div style={{ fontSize: 16, fontWeight: 500 }}>{val}</div>
                   </div>
