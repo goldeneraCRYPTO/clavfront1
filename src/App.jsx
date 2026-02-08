@@ -573,12 +573,14 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                   </div>
                   <div style={{ fontSize: 14, color: COLORS.textDim }}>Launched {token.launched || "recently"}</div>
                 </div>
-                <div style={{ marginLeft: isMobile ? 0 : "auto", textAlign: "right", width: isMobile ? "100%" : "auto" }}>
-                  <div style={{ fontSize: isMobile ? 18 : 28, fontWeight: 500 }}>${formatUsd(token.price)}</div>
-                  <div style={{ fontSize: 16, fontWeight: 500, color: isUp ? COLORS.green : COLORS.red }}>
-                    {token.change24h === null || token.change24h === undefined ? "—" : `${isUp ? "+" : ""}${token.change24h}%`}
+                {!isMobile && (
+                  <div style={{ marginLeft: "auto", textAlign: "right" }}>
+                    <div style={{ fontSize: 28, fontWeight: 500 }}>${formatUsd(token.price)}</div>
+                    <div style={{ fontSize: 16, fontWeight: 500, color: isUp ? COLORS.green : COLORS.red }}>
+                      {token.change24h === null || token.change24h === undefined ? "—" : `${isUp ? "+" : ""}${token.change24h}%`}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div style={{ height: isMobile ? 260 : 400, marginBottom: 16, borderRadius: 8, overflow: 'hidden' }}>
