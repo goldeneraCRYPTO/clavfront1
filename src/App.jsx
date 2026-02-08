@@ -346,19 +346,23 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
 
         {/* Header */}
         <div style={{ marginBottom: 32 }}>
-          <h1 style={{ fontSize: 36, fontWeight: 500, margin: "0 0 12px" }}>{startup.title}</h1>
-          <p style={{ fontSize: 16, color: COLORS.textMuted, margin: "0 0 20px" }}>{startup.shortDesc}</p>
-          
-          <div style={{ display: "flex", alignItems: isMobile ? "center" : "flex-start", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexDirection: isMobile ? "column" : "row", marginBottom: 20 }}>
+            <div>
+              <h1 style={{ fontSize: 36, fontWeight: 500, margin: "0 0 12px" }}>{startup.title}</h1>
+              <p style={{ fontSize: 16, color: COLORS.textMuted, margin: 0 }}>{startup.shortDesc}</p>
+            </div>
+            {startup.hasToken && (
+              <button onClick={onViewToken} style={{ background: COLORS.green, border: "none", borderRadius: 20, padding: "8px 20px", color: "#000", fontSize: 14, fontWeight: 500, cursor: "pointer", alignSelf: isMobile ? "flex-start" : "flex-start", marginTop: isMobile ? 4 : 0 }}>
+                View Token →
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
             {startup.website && <a href={startup.website} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🌐 Website</a>}
             {startup.github && <a href={startup.github} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>💻 GitHub</a>}
             {startup.twitter && <a href={twitterLink(startup.twitter)} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🐦 {startup.twitter}</a>}
             {startup.mvpLink && <a href={startup.mvpLink} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🧪 MVP</a>}
-            {startup.hasToken && (
-              <button onClick={onViewToken} style={{ background: COLORS.green, border: "none", borderRadius: 20, padding: "8px 20px", color: "#000", fontSize: 14, fontWeight: 500, cursor: "pointer", marginLeft: "auto", alignSelf: isMobile ? "center" : "flex-start" }}>
-                View Token →
-              </button>
-            )}
           </div>
         </div>
 
