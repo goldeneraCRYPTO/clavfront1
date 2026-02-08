@@ -1341,7 +1341,7 @@ export default function ClawValley() {
                       background: COLORS.green,
                       borderRadius: 20,
                       padding: "8px 20px",
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: 500,
                       whiteSpace: "nowrap",
                     }}
