@@ -608,9 +608,9 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
           </div>
 
           {/* Right - Updates + Chat */}
-          <div style={{ position: isMobile ? "static" : "sticky", top: 24, height: isMobile ? "auto" : "calc(100vh - 48px)", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 24, height: "auto", display: "flex", flexDirection: "column", gap: 16 }}>
             {/* Updates */}
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", height: isMobile ? 240 : 360, display: "flex", flexDirection: "column", flexShrink: 0 }}>
+            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", height: isMobile ? 240 : 320, display: "flex", flexDirection: "column", flexShrink: 0 }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Updates</div>
               </div>
@@ -632,7 +632,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
             </div>
 
             {/* Chat */}
-            <div style={{ flex: "none", height: isMobile ? 360 : 560, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ flex: "none", height: isMobile ? 360 : 420, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
