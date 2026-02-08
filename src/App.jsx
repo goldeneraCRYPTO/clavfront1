@@ -128,7 +128,7 @@ const formatCompactUsd = (value) => {
   if (value === null || value === undefined || Number.isNaN(value)) return "—";
   const num = Number(value);
   if (!Number.isFinite(num)) return "—";
-  return num.toLocaleString(undefined, { notation: "compact", maximumFractionDigits: 2 });
+  return num.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 2 });
 };
 
 const mapStartupRow = (row) => {
@@ -1295,30 +1295,29 @@ export default function ClawValley() {
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>{token.team.length} team members • {token.launched}</div>
                   </div>
                 </div>
-                <div style={{ marginLeft: isMobile ? 0 : "auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr auto" : "130px 120px auto", alignItems: "center", gap: 14, flexShrink: 0, width: isMobile ? "100%" : "auto" }}>
+                <div style={{ marginLeft: isMobile ? 0 : "auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr auto" : "120px 110px auto", alignItems: "center", gap: 14, flexShrink: 0, width: isMobile ? "100%" : "auto" }}>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, letterSpacing: 1 }}>PRICE</div>
-                    <div style={{ fontSize: 20, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatUsd(token.price)}</div>
+                    <div style={{ fontSize: 14, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatUsd(token.price)}</div>
                   </div>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, letterSpacing: 1 }}>MCAP</div>
-                    <div style={{ fontSize: 20, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
+                    <div style={{ fontSize: 14, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
                   </div>
                   <a
-                    href={token.mintAddress ? `https://bags.fm/coin/${token.mintAddress}` : "https://bags.fm"}
+                    href={token.mintAddress ? `https://bags.fm/${token.mintAddress}` : "https://bags.fm"}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     style={{
                       textDecoration: "none",
-                      border: `1px solid ${COLORS.green}66`,
-                      color: "#00D9FF",
-                      background: "rgba(0, 217, 255, 0.12)",
-                      borderRadius: 999,
-                      padding: isMobile ? "10px 14px" : "10px 20px",
-                      fontSize: 15,
-                      fontWeight: 600,
-                      letterSpacing: 0.3,
+                      border: "none",
+                      color: "#000",
+                      background: COLORS.green,
+                      borderRadius: 20,
+                      padding: "8px 20px",
+                      fontSize: 14,
+                      fontWeight: 500,
                       whiteSpace: "nowrap",
                     }}
                   >
