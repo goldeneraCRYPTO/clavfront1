@@ -372,8 +372,10 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
             </div>
 
             <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: isMobile ? 16 : 24 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 16px" }}>Roadmap</h2>
-              <div style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.8, whiteSpace: "pre-line" }}>{startup.roadmap}</div>
+              <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 16px" }}>Funding Goal</h2>
+              <div style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.8, whiteSpace: "pre-line" }}>
+                {startup.fundingGoal ? startup.fundingGoal : "Not specified yet."}
+              </div>
             </div>
           </div>
 
