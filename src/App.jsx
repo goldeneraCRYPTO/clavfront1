@@ -606,11 +606,11 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
           {/* Right - Updates + Chat */}
           <div style={{ position: isMobile ? "static" : "sticky", top: 24, height: isMobile ? "auto" : "calc(100vh - 48px)", display: "flex", flexDirection: "column", gap: 16 }}>
             {/* Updates */}
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", maxHeight: isMobile ? "none" : "40%" }}>
+            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", height: isMobile ? 240 : 280, display: "flex", flexDirection: "column", flexShrink: 0 }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Updates</div>
               </div>
-              <div style={{ padding: 16, overflowY: isMobile ? "visible" : "auto", maxHeight: isMobile ? "none" : 280 }}>
+              <div style={{ padding: 16, overflowY: "auto", flex: 1 }}>
                 {updates.length === 0 && (
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>No updates yet.</div>
                 )}
@@ -628,12 +628,12 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
             </div>
 
             {/* Chat */}
-            <div style={{ flex: isMobile ? "none" : 1, minHeight: isMobile ? 380 : "auto", background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ flex: "none", height: isMobile ? 360 : 440, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
 
-              <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14, minHeight: isMobile ? 220 : 0 }}>
+              <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
                 {messages.map(msg => (
                   <div key={msg.id} style={{ display: "flex", gap: 10 }}>
                     <div style={{ fontSize: 24, flexShrink: 0 }}>{msg.sender.avatar}</div>
@@ -1104,7 +1104,7 @@ export default function ClawValley() {
                 ))}
               </div>
 
-              <div style={{ position: "sticky", right: 0, justifySelf: "end", background: COLORS.bg, paddingLeft: 8 }}>
+              <div style={{ position: isMobile ? "sticky" : "relative", right: 0, justifySelf: "end", background: COLORS.bg, paddingLeft: 8, zIndex: 20 }}>
                 <button
                   onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
                   style={{
@@ -1135,7 +1135,7 @@ export default function ClawValley() {
                     borderRadius: 12,
                     padding: 4,
                     minWidth: 120,
-                    zIndex: 10,
+                    zIndex: 100,
                   }}>
                     {SORT_OPTIONS.map(opt => (
                       <button
@@ -1223,7 +1223,7 @@ export default function ClawValley() {
                     borderRadius: 12,
                     padding: 4,
                     minWidth: 140,
-                    zIndex: 10,
+                    zIndex: 100,
                   }}>
                     {[
                       { id: "mcap", label: "Market Cap" },
@@ -1276,8 +1276,8 @@ export default function ClawValley() {
                   borderRadius: 12,
                   padding: isMobile ? 14 : 20,
                   cursor: "pointer",
-                  display: "grid",
-                  gridTemplateColumns: isMobile ? "1fr" : "60px 1fr auto",
+                  display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
                   alignItems: "center",
                   gap: isMobile ? 12 : 20,
                   transition: "all 0.2s",
@@ -1285,7 +1285,7 @@ export default function ClawValley() {
                 onMouseEnter={e => e.currentTarget.style.borderColor = COLORS.green + "44"}
                 onMouseLeave={e => e.currentTarget.style.borderColor = COLORS.border}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1, minWidth: 0 }}>
                   <img src={token.logo} alt={token.name} style={{ width: isMobile ? 52 : 60, height: isMobile ? 52 : 60, borderRadius: 12, flexShrink: 0 }} />
                   <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{token.name} <span style={{ color: COLORS.textDim, fontSize: 15 }}>{token.symbol}</span></div>
