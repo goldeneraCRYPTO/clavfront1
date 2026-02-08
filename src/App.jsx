@@ -409,7 +409,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
 // ─── TOKEN PAGE ─────────────────────────────────────────────────────────────
 const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   const isUp = token.change24h >= 0;
-  const chatEndRef = useRef(null);
+  const chatListRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const [messages, setMessages] = useState([]);
   const [updates, setUpdates] = useState([]);
@@ -419,7 +419,10 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   });
   const [input, setInput] = useState("");
 
-  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+  useEffect(() => {
+    if (!chatListRef.current) return;
+    chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+  }, [messages]);
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   useEffect(() => {
@@ -495,6 +498,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   };
 
   const mintAddress = token.mint_address || token.mintAddress;
+  const bagsUrl = mintAddress ? `https://bags.fm/coin/${mintAddress}` : "https://bags.fm";
   const copyMint = async () => {
     if (!mintAddress) return;
     try {
@@ -633,7 +637,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
 
-              <div style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
+              <div ref={chatListRef} style={{ flex: 1, overflowY: "auto", padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
                 {messages.map(msg => (
                   <div key={msg.id} style={{ display: "flex", gap: 10 }}>
                     <div style={{ fontSize: 24, flexShrink: 0 }}>{msg.sender.avatar}</div>
@@ -647,7 +651,6 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                     </div>
                   </div>
                 ))}
-                <div ref={chatEndRef} />
               </div>
 
               <div style={{ padding: 12, borderTop: `1px solid ${COLORS.border}` }}>
@@ -1292,19 +1295,35 @@ export default function ClawValley() {
                   <div style={{ fontSize: 13, color: COLORS.textDim }}>{token.team.length} team members • {token.launched}</div>
                   </div>
                 </div>
-                <div style={{ marginLeft: isMobile ? 0 : "auto", display: "grid", gridTemplateColumns: isMobile ? "1fr auto" : "140px 120px", alignItems: "center", gap: 12, flexShrink: 0, width: isMobile ? "100%" : 280 }}>
-                  <div style={{ width: "100%", minWidth: 0 }}>
-                    <div style={{ background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, padding: "8px 10px", height: 50, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                      <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, whiteSpace: "nowrap" }}>MCap</div>
-                      <div style={{ fontSize: 14, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
-                    </div>
+                <div style={{ marginLeft: isMobile ? 0 : "auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr auto" : "130px 120px auto", alignItems: "center", gap: 14, flexShrink: 0, width: isMobile ? "100%" : "auto" }}>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, letterSpacing: 1 }}>PRICE</div>
+                    <div style={{ fontSize: 20, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatUsd(token.price)}</div>
                   </div>
-                  <div style={{ textAlign: "right", width: isMobile ? "auto" : 120, minWidth: isMobile ? 96 : 120, fontVariantNumeric: "tabular-nums" }}>
-                    <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>${formatUsd(token.price)}</div>
-                    <div style={{ fontSize: 15, fontWeight: 500, color: token.change24h >= 0 ? COLORS.green : COLORS.red }}>
-                      {token.change24h === null || token.change24h === undefined ? "—" : `${token.change24h >= 0 ? "+" : ""}${token.change24h}%`}
-                    </div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 4, letterSpacing: 1 }}>MCAP</div>
+                    <div style={{ fontSize: 20, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
                   </div>
+                  <a
+                    href={bagsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      textDecoration: "none",
+                      border: `1px solid ${COLORS.green}66`,
+                      color: "#00D9FF",
+                      background: "rgba(0, 217, 255, 0.12)",
+                      borderRadius: 999,
+                      padding: isMobile ? "10px 14px" : "10px 20px",
+                      fontSize: 15,
+                      fontWeight: 600,
+                      letterSpacing: 0.3,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    VIEW ↗
+                  </a>
                 </div>
               </div>
             ))}
