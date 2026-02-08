@@ -1305,7 +1305,7 @@ export default function ClawValley() {
                     <div style={{ fontSize: 20, fontWeight: 500, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>${formatCompactUsd(token.mcap)}</div>
                   </div>
                   <a
-                    href={bagsUrl}
+                    href={token.mintAddress ? `https://bags.fm/coin/${token.mintAddress}` : "https://bags.fm"}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
