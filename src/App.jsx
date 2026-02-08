@@ -410,9 +410,12 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
 const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   const isUp = token.change24h >= 0;
   const chatListRef = useRef(null);
+  const leftColumnRef = useRef(null);
+  const updatesPanelRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const [messages, setMessages] = useState([]);
   const [updates, setUpdates] = useState([]);
+  const [desktopChatHeight, setDesktopChatHeight] = useState(420);
   const [name, setName] = useState(() => {
     if (typeof window === "undefined") return "";
     return localStorage.getItem("clav_chat_name") || "";
@@ -424,6 +427,28 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
     chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
   }, [messages]);
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    const recalc = () => {
+      const leftH = leftColumnRef.current?.offsetHeight || 0;
+      const updatesH = updatesPanelRef.current?.offsetHeight || 0;
+      if (!leftH || !updatesH) return;
+      const next = Math.max(320, leftH - updatesH - 16);
+      setDesktopChatHeight(next);
+    };
+
+    recalc();
+    const observer = new ResizeObserver(recalc);
+    if (leftColumnRef.current) observer.observe(leftColumnRef.current);
+    if (updatesPanelRef.current) observer.observe(updatesPanelRef.current);
+    window.addEventListener("resize", recalc);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", recalc);
+    };
+  }, [isMobile, updates.length, messages.length, token.id]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -520,7 +545,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
 
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 360px", gap: 24 }}>
           {/* Left */}
-          <div>
+          <div ref={leftColumnRef}>
             {/* Chart */}
             <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: 24, marginBottom: 20 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, flexWrap: isMobile ? "wrap" : "nowrap" }}>
@@ -610,7 +635,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
           {/* Right - Updates + Chat */}
           <div style={{ position: isMobile ? "static" : "sticky", top: 24, height: "auto", display: "flex", flexDirection: "column", gap: 16 }}>
             {/* Updates */}
-            <div style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", height: isMobile ? 240 : 320, display: "flex", flexDirection: "column", flexShrink: 0 }}>
+            <div ref={updatesPanelRef} style={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, overflow: "hidden", height: isMobile ? 240 : 320, display: "flex", flexDirection: "column", flexShrink: 0 }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Updates</div>
               </div>
@@ -632,7 +657,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
             </div>
 
             {/* Chat */}
-            <div style={{ flex: "none", height: isMobile ? 360 : 420, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ flex: "none", height: isMobile ? 360 : desktopChatHeight, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
