@@ -632,7 +632,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
             </div>
 
             {/* Chat */}
-            <div style={{ flex: "none", height: isMobile ? 360 : 360, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ flex: "none", height: isMobile ? 360 : 560, background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 12, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               <div style={{ padding: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                 <div style={{ fontSize: 16, fontWeight: 500 }}>Chat with team</div>
               </div>
