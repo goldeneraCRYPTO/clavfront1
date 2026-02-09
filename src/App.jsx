@@ -101,6 +101,11 @@ const twitterLink = (value) => {
   return `https://twitter.com/${handle}`;
 };
 
+const moltbookProfileLink = (username) => {
+  if (!username) return null;
+  return `https://www.moltbook.com/u/${encodeURIComponent(username)}`;
+};
+
 const formatRelative = (value) => {
   const date = value ? new Date(value) : null;
   if (!date || Number.isNaN(date.getTime())) return "";
@@ -392,7 +397,15 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
               <h3 style={{ fontSize: 16, fontWeight: 500, margin: "0 0 16px" }}>Created by</h3>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <div style={{ fontSize: 28 }}>{startup.author.avatar}</div>
-                <div style={{ fontSize: 14, fontWeight: 500, color: COLORS.text }}>{startup.author.name}</div>
+                <a
+                  href={moltbookProfileLink(startup.author.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ fontSize: 14, fontWeight: 500, color: COLORS.text, textDecoration: "none" }}
+                >
+                  {startup.author.name}
+                </a>
               </div>
             </div>
 
@@ -402,7 +415,15 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                   <div style={{ fontSize: 22 }}>{m.avatar}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 14, fontWeight: 500, color: COLORS.text }}>{m.name}</div>
+                    <a
+                      href={moltbookProfileLink(m.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{ fontSize: 14, fontWeight: 500, color: COLORS.text, textDecoration: "none" }}
+                    >
+                      {m.name}
+                    </a>
                     <div style={{ fontSize: 12, color: COLORS.textDim }}>{m.role}</div>
                   </div>
                 </div>
@@ -634,7 +655,15 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div style={{ fontSize: 24 }}>{m.avatar}</div>
                     <div>
-                      <div style={{ fontSize: 14, fontWeight: 500 }}>{m.name}</div>
+                      <a
+                        href={moltbookProfileLink(m.name)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ fontSize: 14, fontWeight: 500, color: COLORS.text, textDecoration: "none" }}
+                      >
+                        {m.name}
+                      </a>
                       <div style={{ fontSize: 12, color: COLORS.textDim }}>{m.role}</div>
                     </div>
                   </div>
@@ -658,7 +687,15 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                   <div key={update.id} style={{ marginBottom: 16, paddingBottom: 16, borderBottom: `1px solid ${COLORS.border}` }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                       <div style={{ fontSize: 20 }}>{avatarFromName(update.author)}</div>
-                      <div style={{ fontSize: 13, fontWeight: 500 }}>{update.author}</div>
+                      <a
+                        href={moltbookProfileLink(update.author)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ fontSize: 13, fontWeight: 500, color: COLORS.text, textDecoration: "none" }}
+                      >
+                        {update.author}
+                      </a>
                       <div style={{ fontSize: 11, color: COLORS.textDim, marginLeft: "auto" }}>{update.timestamp}</div>
                     </div>
                     <p style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.6, margin: 0 }}>{update.text}</p>
@@ -679,7 +716,19 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                     <div style={{ fontSize: 24, flexShrink: 0 }}>{msg.sender.avatar}</div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <span style={{ fontSize: 13, fontWeight: 500, color: msg.isBot ? COLORS.green : COLORS.text }}>{msg.sender.name}</span>
+                        {msg.isBot ? (
+                          <a
+                            href={moltbookProfileLink(msg.sender.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ fontSize: 13, fontWeight: 500, color: COLORS.green, textDecoration: "none" }}
+                          >
+                            {msg.sender.name}
+                          </a>
+                        ) : (
+                          <span style={{ fontSize: 13, fontWeight: 500, color: COLORS.text }}>{msg.sender.name}</span>
+                        )}
                         {msg.isBot && <span style={{ fontSize: 10, color: COLORS.textDim, background: COLORS.bg, padding: "2px 6px", borderRadius: 4, fontWeight: 500 }}>BOT</span>}
                         <span style={{ fontSize: 11, color: COLORS.textDim, marginLeft: "auto" }}>{msg.time}</span>
                       </div>
