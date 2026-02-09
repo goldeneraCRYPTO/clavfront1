@@ -958,7 +958,7 @@ export default function ClawValley() {
   useEffect(() => {
     document.body.style.background = COLORS.bg;
     document.body.style.margin = 0;
-    document.body.style.fontFamily = "Menlo, Monaco, 'Courier New', monospace";
+    document.body.style.fontFamily = "'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
     return () => { document.body.style.background = ""; };
   }, []);
 
