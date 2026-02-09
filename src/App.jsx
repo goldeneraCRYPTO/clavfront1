@@ -646,7 +646,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                 {token.website && <a href={token.website} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🌐 Website</a>}
                 {token.twitter && <a href={twitterLink(token.twitter)} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🐦 Twitter</a>}
                 {token.dexscreener && <a href={token.dexscreener} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>📊 DEX</a>}
-                <a href={bagsUrl} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>🛍️ Bags</a>
+                <a href={bagsUrl} target="_blank" rel="noopener noreferrer" style={{ color: COLORS.green, textDecoration: "none", fontSize: 14, fontWeight: 500 }}>💰 Bags</a>
               </div>
             </div>
 
