@@ -248,7 +248,7 @@ const Header = ({ onLogoClick, isMobile = false }) => (
         <img
           src="/clavvalley-logo.png"
           alt="ClaValley"
-          style={{ height: isMobile ? 34 : 44, width: "auto", display: "block" }}
+          style={{ height: isMobile ? 40 : 52, width: "auto", display: "block" }}
         />
         <div style={{ fontSize: 10, color: COLORS.green, background: `${COLORS.green}11`, padding: "4px 10px", borderRadius: 12, marginLeft: 6, fontWeight: 500, letterSpacing: 0.5 }}>BETA</div>
       </button>
