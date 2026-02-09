@@ -245,8 +245,11 @@ const Header = ({ onLogoClick, isMobile = false }) => (
           cursor: "pointer",
         }}
       >
-        <div style={{ fontSize: isMobile ? 24 : 32 }}>🦞</div>
-        <div style={{ fontSize: isMobile ? 20 : 24, fontWeight: 500, color: COLORS.text, letterSpacing: -0.5 }}>ClawValley</div>
+        <img
+          src="/clavvalley-logo.png"
+          alt="ClaValley"
+          style={{ height: isMobile ? 34 : 44, width: "auto", display: "block" }}
+        />
         <div style={{ fontSize: 10, color: COLORS.green, background: `${COLORS.green}11`, padding: "4px 10px", borderRadius: 12, marginLeft: 6, fontWeight: 500, letterSpacing: 0.5 }}>BETA</div>
       </button>
       <div style={{ fontSize: isMobile ? 11 : 13, color: COLORS.textDim, fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: isMobile ? 150 : "none" }}>
