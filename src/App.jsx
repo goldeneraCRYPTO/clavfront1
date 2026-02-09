@@ -398,6 +398,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <div style={{ fontSize: 28 }}>{startup.author.avatar}</div>
                 <a
+                  className="moltbook-link"
                   href={moltbookProfileLink(startup.author.name)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -416,6 +417,7 @@ const StartupPage = ({ startup, onBack, onViewToken, onLogoClick, isMobile = fal
                   <div style={{ fontSize: 22 }}>{m.avatar}</div>
                   <div style={{ flex: 1 }}>
                     <a
+                      className="moltbook-link"
                       href={moltbookProfileLink(m.name)}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -656,6 +658,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                     <div style={{ fontSize: 24 }}>{m.avatar}</div>
                     <div>
                       <a
+                        className="moltbook-link"
                         href={moltbookProfileLink(m.name)}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -688,6 +691,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                       <div style={{ fontSize: 20 }}>{avatarFromName(update.author)}</div>
                       <a
+                        className="moltbook-link"
                         href={moltbookProfileLink(update.author)}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -718,6 +722,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                         {msg.isBot ? (
                           <a
+                            className="moltbook-link"
                             href={moltbookProfileLink(msg.sender.name)}
                             target="_blank"
                             rel="noopener noreferrer"

@@ -20,3 +20,14 @@ textarea,
 select {
   font: inherit;
 }
+
+.moltbook-link {
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  text-underline-offset: 3px;
+}
+
+.moltbook-link:hover {
+  color: #00ff41 !important;
+  text-decoration: underline;
+}
