@@ -36,6 +36,7 @@ const SORT_OPTIONS = [
   { id: "new", label: "New" },
   { id: "live", label: "Live" },
 ];
+const PAGE_SIZE_OPTIONS = [18, 36, 72];
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────
 const DEFAULT_STARTUP_IMAGE =
@@ -828,6 +829,10 @@ export default function ClawValley() {
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth <= 900 : false
   );
+  const [startupPage, setStartupPage] = useState(1);
+  const [tokenPage, setTokenPage] = useState(1);
+  const [startupPerPage, setStartupPerPage] = useState(18);
+  const [tokenPerPage, setTokenPerPage] = useState(18);
   const clientIdRef = useRef(getClientId());
 
   const applyHashRoute = () => {
@@ -1010,6 +1015,11 @@ export default function ClawValley() {
     return 0;
   });
 
+  const startupTotalPages = Math.max(1, Math.ceil(filteredStartups.length / startupPerPage));
+  const tokenTotalPages = Math.max(1, Math.ceil(sortedTokens.length / tokenPerPage));
+  const pagedStartups = filteredStartups.slice((startupPage - 1) * startupPerPage, startupPage * startupPerPage);
+  const pagedTokens = sortedTokens.slice((tokenPage - 1) * tokenPerPage, tokenPage * tokenPerPage);
+
   useEffect(() => {
     document.body.style.background = COLORS.bg;
     document.body.style.margin = 0;
@@ -1031,6 +1041,22 @@ export default function ClawValley() {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  useEffect(() => {
+    setStartupPage(1);
+  }, [activeCategory, activeSort, startupPerPage]);
+
+  useEffect(() => {
+    setTokenPage(1);
+  }, [tokenSort, tokenPerPage]);
+
+  useEffect(() => {
+    if (startupPage > startupTotalPages) setStartupPage(startupTotalPages);
+  }, [startupPage, startupTotalPages]);
+
+  useEffect(() => {
+    if (tokenPage > tokenTotalPages) setTokenPage(tokenTotalPages);
+  }, [tokenPage, tokenTotalPages]);
 
   useEffect(() => {
     applyHashRoute();
@@ -1266,8 +1292,65 @@ export default function ClawValley() {
             {!startupLoading && filteredStartups.length === 0 && (
               <div style={{ color: COLORS.textDim, fontSize: 14 }}>No startups yet.</div>
             )}
+            {!startupLoading && filteredStartups.length > 0 && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <button
+                    onClick={() => setStartupPage((p) => Math.max(1, p - 1))}
+                    disabled={startupPage === 1}
+                    style={{
+                      background: startupPage === 1 ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: startupPage === 1 ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: startupPage === 1 ? "default" : "pointer",
+                    }}
+                  >
+                    Previous
+                  </button>
+                  <div style={{ fontSize: 14, color: COLORS.textMuted }}>
+                    Page {startupPage} of {startupTotalPages}
+                  </div>
+                  <button
+                    onClick={() => setStartupPage((p) => Math.min(startupTotalPages, p + 1))}
+                    disabled={startupPage === startupTotalPages}
+                    style={{
+                      background: startupPage === startupTotalPages ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: startupPage === startupTotalPages ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: startupPage === startupTotalPages ? "default" : "pointer",
+                    }}
+                  >
+                    Next
+                  </button>
+                </div>
+
+                <select
+                  value={startupPerPage}
+                  onChange={(e) => setStartupPerPage(Number(e.target.value))}
+                  style={{
+                    background: COLORS.bgCard,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 12,
+                    padding: "8px 12px",
+                    color: COLORS.text,
+                    fontSize: 14,
+                    cursor: "pointer",
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map((n) => (
+                    <option key={n} value={n}>{n} per page</option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 20 }}>
-              {filteredStartups.map(startup => (
+              {pagedStartups.map(startup => (
                 <StartupCard
                   key={startup.id}
                   startup={startup}
@@ -1357,8 +1440,65 @@ export default function ClawValley() {
             {!tokenLoading && sortedTokens.length === 0 && (
               <div style={{ color: COLORS.textDim, fontSize: 14 }}>No launched tokens yet.</div>
             )}
+            {!tokenLoading && sortedTokens.length > 0 && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <button
+                    onClick={() => setTokenPage((p) => Math.max(1, p - 1))}
+                    disabled={tokenPage === 1}
+                    style={{
+                      background: tokenPage === 1 ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: tokenPage === 1 ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: tokenPage === 1 ? "default" : "pointer",
+                    }}
+                  >
+                    Previous
+                  </button>
+                  <div style={{ fontSize: 14, color: COLORS.textMuted }}>
+                    Page {tokenPage} of {tokenTotalPages}
+                  </div>
+                  <button
+                    onClick={() => setTokenPage((p) => Math.min(tokenTotalPages, p + 1))}
+                    disabled={tokenPage === tokenTotalPages}
+                    style={{
+                      background: tokenPage === tokenTotalPages ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: tokenPage === tokenTotalPages ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: tokenPage === tokenTotalPages ? "default" : "pointer",
+                    }}
+                  >
+                    Next
+                  </button>
+                </div>
+
+                <select
+                  value={tokenPerPage}
+                  onChange={(e) => setTokenPerPage(Number(e.target.value))}
+                  style={{
+                    background: COLORS.bgCard,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 12,
+                    padding: "8px 12px",
+                    color: COLORS.text,
+                    fontSize: 14,
+                    cursor: "pointer",
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map((n) => (
+                    <option key={n} value={n}>{n} per page</option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div style={{ display: "grid", gap: 16 }}>
-              {sortedTokens.map(token => (
+              {pagedTokens.map(token => (
               <div 
                 key={token.id}
                 onClick={() => {
