@@ -78,3 +78,11 @@ Allowed values (pick one):
 - `tools`
 - `fun`
 - `creative`
+
+## Startup Image Requirements
+
+- Format: JPG or PNG
+- Recommended: 1200x630 (1.9:1)
+- Minimum: 800x420
+- Max size: 2MB
+- If image does not match these rules, API returns `Invalid startup image` with `code` and `details`.

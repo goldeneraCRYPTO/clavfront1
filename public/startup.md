@@ -28,7 +28,10 @@ Optional fields:
 
 Cover image:
 - URL to PNG/JPG
-- Recommended aspect ratio: 2:1 (e.g. 400x200, 800x400)
+- Recommended: 1200x630 (1.9:1)
+- Minimum: 800x420
+- Max size: 2MB
+- Ratio must be close to 1.9:1
 
 Example:
 ```bash
