@@ -1292,8 +1292,21 @@ export default function ClawValley() {
             {!startupLoading && filteredStartups.length === 0 && (
               <div style={{ color: COLORS.textDim, fontSize: 14 }}>No startups yet.</div>
             )}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 20 }}>
+              {pagedStartups.map(startup => (
+                <StartupCard
+                  key={startup.id}
+                  startup={startup}
+                  liked={likedIds.has(startup.id)}
+                  onLike={handleLike}
+                  onClick={() => {
+                    window.location.hash = `startup/${startup.id}`;
+                  }}
+                />
+              ))}
+            </div>
             {!startupLoading && filteredStartups.length > 0 && (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginTop: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <button
                     onClick={() => setStartupPage((p) => Math.max(1, p - 1))}
@@ -1349,19 +1362,6 @@ export default function ClawValley() {
                 </select>
               </div>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 20 }}>
-              {pagedStartups.map(startup => (
-                <StartupCard
-                  key={startup.id}
-                  startup={startup}
-                  liked={likedIds.has(startup.id)}
-                  onLike={handleLike}
-                  onClick={() => {
-                    window.location.hash = `startup/${startup.id}`;
-                  }}
-                />
-              ))}
-            </div>
           </>
         )}
 
@@ -1440,63 +1440,6 @@ export default function ClawValley() {
             {!tokenLoading && sortedTokens.length === 0 && (
               <div style={{ color: COLORS.textDim, fontSize: 14 }}>No launched tokens yet.</div>
             )}
-            {!tokenLoading && sortedTokens.length > 0 && (
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <button
-                    onClick={() => setTokenPage((p) => Math.max(1, p - 1))}
-                    disabled={tokenPage === 1}
-                    style={{
-                      background: tokenPage === 1 ? COLORS.bg : COLORS.bgCard,
-                      border: `1px solid ${COLORS.border}`,
-                      borderRadius: 12,
-                      padding: "8px 14px",
-                      color: tokenPage === 1 ? COLORS.textDim : COLORS.text,
-                      fontSize: 14,
-                      cursor: tokenPage === 1 ? "default" : "pointer",
-                    }}
-                  >
-                    Previous
-                  </button>
-                  <div style={{ fontSize: 14, color: COLORS.textMuted }}>
-                    Page {tokenPage} of {tokenTotalPages}
-                  </div>
-                  <button
-                    onClick={() => setTokenPage((p) => Math.min(tokenTotalPages, p + 1))}
-                    disabled={tokenPage === tokenTotalPages}
-                    style={{
-                      background: tokenPage === tokenTotalPages ? COLORS.bg : COLORS.bgCard,
-                      border: `1px solid ${COLORS.border}`,
-                      borderRadius: 12,
-                      padding: "8px 14px",
-                      color: tokenPage === tokenTotalPages ? COLORS.textDim : COLORS.text,
-                      fontSize: 14,
-                      cursor: tokenPage === tokenTotalPages ? "default" : "pointer",
-                    }}
-                  >
-                    Next
-                  </button>
-                </div>
-
-                <select
-                  value={tokenPerPage}
-                  onChange={(e) => setTokenPerPage(Number(e.target.value))}
-                  style={{
-                    background: COLORS.bgCard,
-                    border: `1px solid ${COLORS.border}`,
-                    borderRadius: 12,
-                    padding: "8px 12px",
-                    color: COLORS.text,
-                    fontSize: 14,
-                    cursor: "pointer",
-                  }}
-                >
-                  {PAGE_SIZE_OPTIONS.map((n) => (
-                    <option key={n} value={n}>{n} per page</option>
-                  ))}
-                </select>
-              </div>
-            )}
             <div style={{ display: "grid", gap: 16 }}>
               {pagedTokens.map(token => (
               <div 
@@ -1558,6 +1501,63 @@ export default function ClawValley() {
               </div>
             ))}
           </div>
+            {!tokenLoading && sortedTokens.length > 0 && (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginTop: 16, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <button
+                    onClick={() => setTokenPage((p) => Math.max(1, p - 1))}
+                    disabled={tokenPage === 1}
+                    style={{
+                      background: tokenPage === 1 ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: tokenPage === 1 ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: tokenPage === 1 ? "default" : "pointer",
+                    }}
+                  >
+                    Previous
+                  </button>
+                  <div style={{ fontSize: 14, color: COLORS.textMuted }}>
+                    Page {tokenPage} of {tokenTotalPages}
+                  </div>
+                  <button
+                    onClick={() => setTokenPage((p) => Math.min(tokenTotalPages, p + 1))}
+                    disabled={tokenPage === tokenTotalPages}
+                    style={{
+                      background: tokenPage === tokenTotalPages ? COLORS.bg : COLORS.bgCard,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      color: tokenPage === tokenTotalPages ? COLORS.textDim : COLORS.text,
+                      fontSize: 14,
+                      cursor: tokenPage === tokenTotalPages ? "default" : "pointer",
+                    }}
+                  >
+                    Next
+                  </button>
+                </div>
+
+                <select
+                  value={tokenPerPage}
+                  onChange={(e) => setTokenPerPage(Number(e.target.value))}
+                  style={{
+                    background: COLORS.bgCard,
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 12,
+                    padding: "8px 12px",
+                    color: COLORS.text,
+                    fontSize: 14,
+                    cursor: "pointer",
+                  }}
+                >
+                  {PAGE_SIZE_OPTIONS.map((n) => (
+                    <option key={n} value={n}>{n} per page</option>
+                  ))}
+                </select>
+              </div>
+            )}
           </>
         )}
       </div>
