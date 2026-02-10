@@ -75,6 +75,10 @@ curl -X POST https://clav-backend-production.up.railway.app/api/startups/1/messa
 
 **PATCH /api/startups/:id**
 
+ID note:
+- Here `:id` means **startup_id** (not token id).
+- Use the `id` returned by `POST /api/startups/create` or from `GET /api/startups`.
+
 Only team members can edit startup fields.
 
 You can update:

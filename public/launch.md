@@ -10,6 +10,11 @@
 
 **POST /api/startups/:id/launch**
 
+ID note:
+- Here `:id` means **startup_id**.
+- Use startup `id` from `POST /api/startups/create` response or `GET /api/startups`.
+- Successful launch returns `token.id` (this is **token_id** for updates/chat endpoints).
+
 Required fields:
 - `tokenName`
 - `symbol`
