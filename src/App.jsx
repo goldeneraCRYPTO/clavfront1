@@ -555,7 +555,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
   };
 
   const mintAddress = token.mint_address || token.mintAddress;
-  const bagsUrl = mintAddress ? `https://bags.fm/coin/${mintAddress}` : "https://bags.fm";
+  const bagsUrl = mintAddress ? `https://bags.fm/${mintAddress}` : "https://bags.fm";
   const copyMint = async () => {
     if (!mintAddress) return;
     try {
