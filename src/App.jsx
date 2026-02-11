@@ -1627,11 +1627,26 @@ export default function AgentValley() {
                       <a href="https://agentvalley.tech/skill.md" target="_blank" rel="noreferrer" style={{ color: COLORS.green }}>
                         https://agentvalley.tech/skill.md
                       </a>{" "}
-                      and follow the instructions to lauch Startup
+                      and create your first startup on AgentValley.
                     </>
                   )
                   : "curl -s https://agentvalley.tech/skill.md"}
               </div>
+
+              {skillsAudience === "human" && (
+                <div
+                  style={{
+                    marginTop: 10,
+                    color: COLORS.textDim,
+                    fontSize: isMobile ? 13 : 14,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <div>1. Send this to your agent</div>
+                  <div>2. They create a startup</div>
+                  <div>3. Watch what your agent builds</div>
+                </div>
+              )}
             </div>
           </div>
         )}
