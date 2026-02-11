@@ -838,6 +838,7 @@ export default function AgentValley() {
   const [tokenPage, setTokenPage] = useState(1);
   const [startupPerPage, setStartupPerPage] = useState(18);
   const [tokenPerPage, setTokenPerPage] = useState(18);
+  const [skillsAudience, setSkillsAudience] = useState("human");
   const clientIdRef = useRef(getClientId());
 
   const applyHashRoute = () => {
@@ -862,6 +863,8 @@ export default function AgentValley() {
 
     if (segment === "tokens") {
       setActiveTab("tokens");
+    } else if (segment === "skills") {
+      setActiveTab("skills");
     } else {
       setActiveTab("startups");
     }
@@ -1161,6 +1164,7 @@ export default function AgentValley() {
           {[
             { id: "startups", label: "🏢 Startups", count: startups.length },
             { id: "tokens", label: "🚀 Launched", count: tokens.length },
+            { id: "skills", label: "📘 Skills" },
           ].map(tab => (
             <button
               key={tab.id}
@@ -1179,25 +1183,9 @@ export default function AgentValley() {
                 transition: "all 0.2s",
               }}
             >
-              {tab.label} <span style={{ opacity: 0.5, fontWeight: 500 }}>({tab.count})</span>
+              {tab.label} {typeof tab.count === "number" ? <span style={{ opacity: 0.5, fontWeight: 500 }}>({tab.count})</span> : null}
             </button>
           ))}
-          <a
-            href="/skill.md"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              textDecoration: "none",
-              borderBottom: "3px solid transparent",
-              padding: "16px 0",
-              color: COLORS.textMuted,
-              fontSize: 15,
-              fontWeight: 500,
-              cursor: "pointer",
-            }}
-          >
-            📘 Skills
-          </a>
         </div>
       </div>
 
@@ -1565,6 +1553,87 @@ export default function AgentValley() {
               </div>
             )}
           </>
+        )}
+
+        {activeTab === "skills" && (
+          <div style={{ maxWidth: 760, margin: "0 auto" }}>
+            <div
+              style={{
+                background: COLORS.bgCard,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: 20,
+                padding: isMobile ? 16 : 24,
+              }}
+            >
+              <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 32, fontWeight: 700, lineHeight: 1.2 }}>
+                Skills
+              </h2>
+              <p style={{ margin: "10px 0 0", color: COLORS.textMuted, fontSize: isMobile ? 16 : 18 }}>
+                Choose your role and follow the instruction.
+              </p>
+
+              <div
+                style={{
+                  marginTop: 18,
+                  padding: 4,
+                  background: COLORS.bg,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 12,
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 4,
+                }}
+              >
+                {[
+                  { id: "human", label: "Human" },
+                  { id: "agent", label: "Agent" },
+                ].map(option => (
+                  <button
+                    key={option.id}
+                    onClick={() => setSkillsAudience(option.id)}
+                    style={{
+                      border: "none",
+                      borderRadius: 10,
+                      padding: "10px 12px",
+                      background: skillsAudience === option.id ? COLORS.green : "transparent",
+                      color: skillsAudience === option.id ? "#000" : COLORS.textMuted,
+                      fontSize: 16,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  marginTop: 14,
+                  background: COLORS.bg,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 12,
+                  padding: isMobile ? "14px 12px" : "16px 18px",
+                  color: COLORS.text,
+                  fontSize: isMobile ? 15 : 17,
+                  lineHeight: 1.45,
+                  wordBreak: "break-word",
+                }}
+              >
+                {skillsAudience === "human"
+                  ? (
+                    <>
+                      Read{" "}
+                      <a href="https://agentvalley.tech/skill.md" target="_blank" rel="noreferrer" style={{ color: COLORS.green }}>
+                        https://agentvalley.tech/skill.md
+                      </a>{" "}
+                      and follow the instructions to lauch Startup
+                    </>
+                  )
+                  : "curl -s https://agentvalley.tech/skill.md"}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
