@@ -842,8 +842,14 @@ export default function AgentValley() {
   const [humanSkillCopied, setHumanSkillCopied] = useState(false);
   const clientIdRef = useRef(getClientId());
 
-  const applyHashRoute = () => {
-    const raw = (window.location.hash || "").replace(/^#\/?/, "");
+  const parseCurrentRoute = () => {
+    const pathRaw = (window.location.pathname || "/").replace(/^\/+|\/+$/g, "");
+    if (pathRaw) return pathRaw;
+    return (window.location.hash || "").replace(/^#\/?/, "");
+  };
+
+  const applyRoute = () => {
+    const raw = parseCurrentRoute();
     const [segment, id] = raw.split("/");
 
     if (segment === "startup" && id) {
@@ -873,6 +879,14 @@ export default function AgentValley() {
     setRouteTokenId(null);
     setSelectedStartup(null);
     setSelectedToken(null);
+  };
+
+  const navigateTo = (path, options = {}) => {
+    const normalized = path === "/" ? "/" : `/${String(path).replace(/^\/+/, "")}`;
+    const current = window.location.pathname || "/";
+    if (options.replace) window.history.replaceState(null, "", normalized);
+    else if (current !== normalized) window.history.pushState(null, "", normalized);
+    applyRoute();
   };
 
   const loadStartups = async () => {
@@ -1069,9 +1083,13 @@ export default function AgentValley() {
   }, [tokenPage, tokenTotalPages]);
 
   useEffect(() => {
-    applyHashRoute();
-    window.addEventListener("hashchange", applyHashRoute);
-    return () => window.removeEventListener("hashchange", applyHashRoute);
+    applyRoute();
+    window.addEventListener("popstate", applyRoute);
+    window.addEventListener("hashchange", applyRoute);
+    return () => {
+      window.removeEventListener("popstate", applyRoute);
+      window.removeEventListener("hashchange", applyRoute);
+    };
   }, []);
 
   useEffect(() => {
@@ -1112,7 +1130,7 @@ export default function AgentValley() {
   }, [selectedStartup, selectedToken]);
 
   const handleLogoClick = () => {
-    window.location.hash = "startups";
+    navigateTo("/");
     window.scrollTo(0, 0);
   };
 
@@ -1122,7 +1140,7 @@ export default function AgentValley() {
         token={selectedToken}
         onBack={() => {
           if (window.history.length > 1) window.history.back();
-          else window.location.hash = "tokens";
+          else navigateTo("/tokens");
         }}
         onLogoClick={handleLogoClick}
         isMobile={isMobile}
@@ -1141,14 +1159,14 @@ export default function AgentValley() {
         startup={selectedStartupResolved}
         onBack={() => {
           if (window.history.length > 1) window.history.back();
-          else window.location.hash = "startups";
+          else navigateTo("/");
         }}
         onLogoClick={handleLogoClick}
         isMobile={isMobile}
         onViewToken={() => {
           const token = tokens.find(t => t.startupId === selectedStartupResolved.id);
           if (token) {
-            window.location.hash = `token/${token.id}`;
+            navigateTo(`/token/${token.id}`);
           }
         }}
       />
@@ -1170,7 +1188,7 @@ export default function AgentValley() {
             <button
               key={tab.id}
               onClick={() => {
-                window.location.hash = tab.id;
+                navigateTo(tab.id === "startups" ? "/" : `/${tab.id}`);
               }}
               style={{
                 background: "none",
@@ -1295,7 +1313,7 @@ export default function AgentValley() {
                   liked={likedIds.has(startup.id)}
                   onLike={handleLike}
                   onClick={() => {
-                    window.location.hash = `startup/${startup.id}`;
+                    navigateTo(`/startup/${startup.id}`);
                   }}
                 />
               ))}
@@ -1440,7 +1458,7 @@ export default function AgentValley() {
               <div 
                 key={token.id}
                 onClick={() => {
-                  window.location.hash = `token/${token.id}`;
+                  navigateTo(`/token/${token.id}`);
                 }}
                 style={{
                   background: COLORS.bgCard,
