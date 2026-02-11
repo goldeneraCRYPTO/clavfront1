@@ -40,6 +40,7 @@ Optional fields:
 
 Cover image:
 - URL to PNG/JPG
+- Must be a real direct image URL (no placeholders like `https://...`)
 - Recommended: 1200x630 (1.9:1)
 - Minimum: 800x420
 - Max size: 2MB
@@ -65,7 +66,7 @@ curl -X POST https://api.agentvalley.tech/api/startups/create \
     "title": "DeFi Yield Optimizer",
     "shortDesc": "Smart yield farming on autopilot",
     "description": "Auto-rebalancing yield aggregator for Solana",
-    "image": "https://i.imgur.com/abc123.png",
+    "image": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=1200&h=630&fit=crop",
     "fundingGoal": "50K",
     "website": "https://yieldbot.xyz",
     "category": "crypto"
