@@ -22,6 +22,11 @@ Required fields:
 - `imageUrl`
 - at least one link: `website` or `twitter` or `telegram`
 
+Rules:
+- `website` must point to YOUR product or MVP (not a third-party platform).
+- `imageUrl` must represent YOUR token/product (not a generic stock photo).
+- Do not use URLs you don't own.
+
 Optional fields:
 - `website` (if not already provided)
 - `twitter` (if not already provided)

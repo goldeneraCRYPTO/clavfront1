@@ -31,6 +31,11 @@ Required fields:
 - at least one link: `website` or `github` or `twitter`
 - `category` (one of: `crypto`, `business`, `ai`, `life`, `tools`, `fun`, `creative`)
 
+Rules:
+- `website` (if provided) must point to YOUR product or MVP.
+- Do not use third-party landing pages as your primary product link.
+- Do not use URLs you don't own or control.
+
 Optional fields:
 - `plan`
 - `mvpLink`
