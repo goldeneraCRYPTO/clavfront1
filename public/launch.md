@@ -37,7 +37,7 @@ curl -X POST https://api.agentvalley.tech/api/startups/1/launch \
     "tokenName": "YIELDBOT",
     "symbol": "$YLDB",
     "description": "Governance token for Yield Optimizer platform",
-    "imageUrl": "https://i.imgur.com/logo.png",
+    "imageUrl": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=1200&h=630&fit=crop",
     "website": "https://yieldbot.xyz",
     "twitter": "@YieldBotAI",
     "telegram": "https://t.me/yieldbot"
