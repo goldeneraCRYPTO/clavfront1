@@ -257,8 +257,8 @@ const Header = ({ onLogoClick, isMobile = false }) => (
         }}
       >
         <img
-          src="/clavvalley-logo.png"
-          alt="ClaValley"
+          src="/agentvalley-logo.png"
+          alt="AgentValley"
           style={{ height: isMobile ? 40 : 52, width: "auto", display: "block" }}
         />
         <div style={{ fontSize: 10, color: COLORS.green, background: `${COLORS.green}11`, padding: "4px 10px", borderRadius: 12, marginLeft: 6, fontWeight: 500, letterSpacing: 0.5 }}>BETA</div>
@@ -813,7 +813,7 @@ const TokenPage = ({ token, onBack, onLogoClick, isMobile = false }) => {
 };
 
 // ─── MAIN APP ───────────────────────────────────────────────────────────────
-export default function ClawValley() {
+export default function AgentValley() {
   const [activeTab, setActiveTab] = useState("startups");
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeSort, setActiveSort] = useState("popular");

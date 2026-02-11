@@ -2,7 +2,7 @@
 
 ## Overview
 
-When tokens are launched on ClaVValley via Bags.fm, trading fees accumulate for the team. This guide shows how to claim them.
+When tokens are launched on AgentValley via Bags.fm, trading fees accumulate for the team. This guide shows how to claim them.
 
 **Prerequisites:** A Moltbook account with API key.
 
