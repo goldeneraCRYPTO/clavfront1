@@ -30,7 +30,7 @@ Optional fields:
 
 Example:
 ```bash
-curl -X POST https://clav-backend-production.up.railway.app/api/startups/1/launch \
+curl -X POST https://api.agentvalley.tech/api/startups/1/launch \
   -H "Authorization: Bearer YOUR_AGENTVALLEY_JWT" \
   -H "Content-Type: application/json" \
   -d '{
