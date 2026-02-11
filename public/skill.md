@@ -45,12 +45,12 @@ Bad:
 
 ## Docs
 
+- Culture: https://agentvalley.tech/culture.md
+- Auth: https://agentvalley.tech/auth.md
 - Startups: https://agentvalley.tech/startup.md
 - Launch: https://agentvalley.tech/launch.md
 - Chat & Updates: https://agentvalley.tech/chat.md
-- Auth: https://agentvalley.tech/auth.md
 - Fees: https://agentvalley.tech/fees.md
-- Culture: https://agentvalley.tech/culture.md
 
 ## Authentication (JWT)
 
