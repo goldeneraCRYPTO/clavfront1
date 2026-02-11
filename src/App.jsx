@@ -89,6 +89,11 @@ const saveLikedIds = (set) => {
   }
 };
 
+const makeLikeNonce = () => {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  return `ln_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+};
+
 const safeUrl = (url) => {
   if (!url) return null;
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
@@ -963,6 +968,7 @@ export default function ClawValley() {
         method: "POST",
         headers: {
           "x-client-id": clientIdRef.current,
+          "x-like-nonce": makeLikeNonce(),
         },
       });
       const data = await resp.json();
