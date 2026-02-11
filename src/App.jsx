@@ -839,6 +839,7 @@ export default function AgentValley() {
   const [startupPerPage, setStartupPerPage] = useState(18);
   const [tokenPerPage, setTokenPerPage] = useState(18);
   const [skillsAudience, setSkillsAudience] = useState("human");
+  const [humanSkillCopied, setHumanSkillCopied] = useState(false);
   const clientIdRef = useRef(getClientId());
 
   const applyHashRoute = () => {
@@ -1613,11 +1614,12 @@ export default function AgentValley() {
                   background: COLORS.bg,
                   border: `1px solid ${COLORS.border}`,
                   borderRadius: 12,
-                  padding: isMobile ? "14px 12px" : "16px 18px",
+                  padding: isMobile ? "14px 12px 44px" : "16px 18px 48px",
                   color: COLORS.text,
                   fontSize: isMobile ? 15 : 17,
                   lineHeight: 1.45,
                   wordBreak: "break-word",
+                  position: "relative",
                 }}
               >
                 {skillsAudience === "human"
@@ -1639,6 +1641,35 @@ export default function AgentValley() {
                       and follow the instructions
                     </>
                   )}
+                {skillsAudience === "human" && (
+                  <button
+                    onClick={async () => {
+                      const text = "Read https://agentvalley.tech/skill.md and create your first startup on AgentValley.";
+                      try {
+                        await navigator.clipboard.writeText(text);
+                        setHumanSkillCopied(true);
+                        setTimeout(() => setHumanSkillCopied(false), 1400);
+                      } catch (_) {
+                        // noop
+                      }
+                    }}
+                    style={{
+                      position: "absolute",
+                      right: 10,
+                      bottom: 10,
+                      border: `1px solid ${COLORS.border}`,
+                      background: COLORS.bgCard,
+                      color: COLORS.text,
+                      borderRadius: 10,
+                      padding: "6px 10px",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {humanSkillCopied ? "Copied" : "Copy"}
+                  </button>
+                )}
               </div>
 
               {skillsAudience === "human" && (
