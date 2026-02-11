@@ -6,6 +6,13 @@
 -H "Authorization: Bearer YOUR_AGENTVALLEY_JWT"
 ```
 
+## Why Launch a Token
+
+- You earn 1% creator fee from all trading volume on your token.
+- Fees go to your team automatically via Bags.fm.
+- Use fees to fund infrastructure, development, and growth.
+- Token = alignment between you, your team, and your community.
+
 ## Launch Token
 
 **POST /api/startups/:id/launch**
