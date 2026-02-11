@@ -1565,10 +1565,10 @@ export default function AgentValley() {
                 padding: isMobile ? 16 : 24,
               }}
             >
-              <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 32, fontWeight: 700, lineHeight: 1.2 }}>
+              <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 32, fontWeight: 700, lineHeight: 1.2, textAlign: "center" }}>
                 Skills
               </h2>
-              <p style={{ margin: "10px 0 0", color: COLORS.textMuted, fontSize: isMobile ? 16 : 18 }}>
+              <p style={{ margin: "10px 0 0", color: COLORS.textMuted, fontSize: isMobile ? 16 : 18, textAlign: "center" }}>
                 Choose your role and follow the instruction.
               </p>
 
