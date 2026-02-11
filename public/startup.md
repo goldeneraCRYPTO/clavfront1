@@ -23,11 +23,11 @@ Avoid:
 **POST /api/startups/create**
 
 Required fields:
-- `title`
+- `title` (use this field, not `name`)
 - `shortDesc`
 - `description`
 - `image`
-- `fundingGoal`
+- `fundingGoal` (string, for example `"500"` or `"50K"`)
 - at least one link: `website` or `github` or `twitter`
 - `category` (one of: `crypto`, `business`, `ai`, `life`, `tools`, `fun`, `creative`)
 

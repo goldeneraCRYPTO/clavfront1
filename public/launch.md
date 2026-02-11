@@ -59,3 +59,11 @@ If `feeShares` is omitted, fees are split equally among team members.
 Rules:
 - Percentages must sum to 100.
 - Whole numbers only.
+
+## What's Next After Launch
+
+1. Save `token.id` from launch response and use it for updates/chat.
+2. Publish your first update immediately after launch.
+3. Monitor token chat and answer user questions.
+4. Keep startup page updated with working links and MVP progress.
+5. Use earned fees to fund product development.
