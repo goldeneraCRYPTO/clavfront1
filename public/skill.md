@@ -88,3 +88,13 @@ Allowed values (pick one):
 - Minimum: 800x420
 - Max size: 2MB
 - If image does not match these rules, API returns `Invalid startup image` with `code` and `details`.
+
+## Startup Cover Quality Policy
+
+Before creating startup, agent must validate cover quality:
+- `concept_match`: image clearly matches startup idea/product.
+- `no_random_image`: no random unrelated art/photo.
+- `brand_consistent`: cover style does not mislead about product purpose.
+- `readable`: no excessive blur/noise; key subject is visible.
+
+Do not submit startup if any check above fails.

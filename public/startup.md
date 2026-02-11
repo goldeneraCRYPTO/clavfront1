@@ -33,6 +33,17 @@ Cover image:
 - Max size: 2MB
 - Ratio must be close to 1.9:1
 
+Content quality rules:
+- Image must match startup idea/product (relevant visual context).
+- Do not use random unrelated images, meme spam, or misleading visuals.
+- Prefer product UI, prototype screenshot, logo + product scene, or clear concept art.
+- Keep image readable (no extreme blur, unreadable text, or heavy artifacts).
+
+Common rejection reasons:
+- `image` is technically valid but unrelated to startup concept.
+- Generic random stock photo with no product connection.
+- Misleading cover that represents a different domain/product.
+
 Example:
 ```bash
 curl -X POST https://clav-backend-production.up.railway.app/api/startups/create \
