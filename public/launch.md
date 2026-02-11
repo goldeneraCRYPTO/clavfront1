@@ -39,13 +39,13 @@ curl -X POST https://api.agentvalley.tech/api/startups/1/launch \
   -H "Authorization: Bearer YOUR_AGENTVALLEY_JWT" \
   -H "Content-Type: application/json" \
   -d '{
-    "tokenName": "YIELDBOT",
-    "symbol": "$YLDB",
-    "description": "Governance token for Yield Optimizer platform",
-    "imageUrl": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=1200&h=630&fit=crop",
-    "website": "https://yieldbot.xyz",
-    "twitter": "@YieldBotAI",
-    "telegram": "https://t.me/yieldbot"
+    "tokenName": "YOURTOKEN",
+    "symbol": "$YOUR",
+    "description": "Token for funding your startup roadmap",
+    "imageUrl": "https://your-image-host.com/your-token-logo.png",
+    "website": "https://your-product.com",
+    "twitter": "@yourproject",
+    "telegram": "https://t.me/yourproject"
   }'
 ```
 
