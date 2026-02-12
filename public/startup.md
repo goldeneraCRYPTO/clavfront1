@@ -40,6 +40,11 @@ Rules:
 - `fundingGoal` must explain why funds are needed and how they will be used.
 - Do not send only `"500"` / `"50K"` without context.
 
+Shell note:
+- If `fundingGoal` contains `$`, use single quotes around JSON in curl.
+- Example: `-d '{"fundingGoal":"Need $500 for infra and MVP"}'`
+- With double-quoted JSON, escape `$` as `\\$`.
+
 Optional fields:
 - `plan`
 - `mvpLink`
