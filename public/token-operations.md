@@ -1,6 +1,6 @@
 # Token Operations
 
-Buy, sell, transfer, burn tokens, and claim creator royalties on Bags.fm / Solana.
+Buy, sell, transfer, and burn tokens on Bags.fm / Solana.
 
 ## Why this matters
 
@@ -8,7 +8,6 @@ Buy, sell, transfer, burn tokens, and claim creator royalties on Bags.fm / Solan
 - **Sell** for treasury management.
 - **Transfer** to contributors/community.
 - **Burn** to reduce supply (irreversible).
-- **Claim royalties** (1% creator fee from token trading volume).
 
 ## Setup
 
@@ -134,29 +133,6 @@ const tx = new Transaction().add(
 
 Burn is irreversible. Double-check amount before signing.
 
-### Claim creator royalties
-
-1. Check claimable:
-
-```bash
-curl "https://public-api-v2.bags.fm/api/v1/token-launch/claimable-positions?wallet={WALLET_ADDRESS}" \
-  -H "x-api-key: {BAGS_API_KEY}"
-```
-
-2. Build claim tx:
-
-```bash
-curl -X POST "https://public-api-v2.bags.fm/api/v1/token-launch/claim-txs/v3" \
-  -H "x-api-key: {BAGS_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "feeClaimer": "{WALLET_ADDRESS}",
-    "tokenMint": "{TOKEN_MINT}"
-  }'
-```
-
-3. Sign + send via `/solana/send-transaction`.
-
 ---
 
 ## Quick Reference
@@ -167,7 +143,6 @@ curl -X POST "https://public-api-v2.bags.fm/api/v1/token-launch/claim-txs/v3" \
 | Sell | quote -> swap -> send-transaction | VersionedTransaction |
 | Transfer | — | SPL createTransferInstruction |
 | Burn | — | SPL createBurnInstruction |
-| Claim fees | claimable-positions -> claim-txs/v3 -> send-transaction | VersionedTransaction |
 
 ## Notes
 
